@@ -67,7 +67,55 @@ NodePtr search_node(NodePtr tree, int find_value)
 	return return_ptr;
 }
 
+void delete_node(NodePtr *tree, int delete_value)
+{
+	if ((*tree)->value == delete_value) // 지울애 디텍트
+	{
+		if ((*tree)->l_arm == NULL && (*tree)->r_arm == NULL)   // subtree없다.
+		{
+			free((*tree));  // 그냥 제거
+		}
+		else if (((*tree)->l_arm == NULL && (*tree)->r_arm != NULL) || ((*tree)->r_arm == NULL && (*tree)->l_arm != NULL))  //둘중하나 subtree 존재
+		{
+			if ((*tree)->l_arm == NULL)  //  오른쪽만 subtree 있음.
+				(*tree) = (*tree)->r_arm;
+			else if ((*tree)->r_arm == NULL)  // 왼쪽만 subtree 있음.
+				(*tree) = (*tree)->l_arm;
+		}
+		else if ((*tree)->l_arm != NULL && (*tree)->r_arm != NULL) // 양쪽다 subtree 있다.
+		{
+			NodePtr temp_ptr = find_min_arm( &((*tree)->r_arm ));
+			temp_ptr->l_arm = (*tree)->l_arm;
+			temp_ptr->r_arm = (*tree)->r_arm;
 
+			free(*tree);
+
+			(*tree) = temp_ptr;
+		}
+		
+	}
+	else if ((*tree)->value > delete_value)
+		delete_node(&((*tree)->l_arm), delete_value);
+	else if ((*tree)->value < delete_value)
+		delete_node(&((*tree)->r_arm), delete_value);
+}
+
+
+
+NodePtr find_min_arm(NodePtr* tree)
+{
+	if ((*tree)->l_arm == NULL)
+	{
+		NodePtr result_ptr = *tree;
+
+		if ((*tree)->r_arm != NULL)
+			(*tree) = (*tree)->r_arm;
+		
+		return result_ptr;
+	}
+	else
+		return find_min_arm( &((*tree)->l_arm) );
+}
 
 
 
