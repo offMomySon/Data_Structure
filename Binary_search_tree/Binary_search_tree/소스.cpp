@@ -173,7 +173,7 @@ int find_min_arm(NodePtr* tree)
 		return find_min_arm( &((*tree)->l_arm) );  // 왼쪽으로 계속이동
 }
 
-
+//http://leeyongjeon.tistory.com/entry/C%EC%96%B8%EC%96%B4-%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89-%ED%8A%B8%EB%A6%ACBinary-Search-Trees-in-C
 
 
 
